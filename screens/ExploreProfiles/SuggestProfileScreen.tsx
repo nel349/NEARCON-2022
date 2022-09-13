@@ -68,14 +68,14 @@ export default function SuggestedProfileScreen(props:any) {
     }
 
     useEffect(async () => {
-        try {
-            const profile = await fetchDefaultProfile();
-            // console.log('current profile = ', JSON.stringify(profile))
-            setUserProfile(profile)
-        }
-        catch (err) {
+        // try {
+        //     const profile = await fetchDefaultProfile();
+        //     // console.log('current profile = ', JSON.stringify(profile))
+        //     setUserProfile(profile)
+        // }
+        // catch (err) {
 
-        }
+        // }
 
     })
 

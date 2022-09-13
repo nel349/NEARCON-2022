@@ -4,6 +4,7 @@ import { useWalletConnect } from '@walletconnect/react-native-dapp';
 import { signIn } from '../../lens_protocol/api-polygon/authenticate'
 import { setDefaultProfile } from '../../lens_protocol/api-polygon/utils'
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const styles = StyleSheet.create({
     buttonStyle: {
@@ -31,8 +32,15 @@ const styles = StyleSheet.create({
 
 export const CredentialSectionComponent = () => {
   const connector = useWalletConnect();
-  const connectWallet = React.useCallback(async () => connector.connect(), [connector]);
-  const killSession = React.useCallback(() => connector.killSession(), [connector]);
+  const connectWallet = React.useCallback(async () => {
+    const session = await connector.connect();
+    await AsyncStorage.setItem('LH_STORAGE_KEY', JSON.stringify({ address: session.accounts[0]}))
+    console.log('address to save: ' + session.accounts[0])
+}, [connector]);
+  const killSession = React.useCallback(() => {
+    connector.killSession();
+    AsyncStorage.clear();
+}, [connector]);
   const [signer, setSigner] = useState({});
 
   const shortenAddress = (address) => `${address.slice(0, 6)}...${address.slice(
