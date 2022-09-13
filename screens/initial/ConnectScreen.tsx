@@ -1,9 +1,10 @@
-import { View, Text, SafeAreaView, StatusBar, Dimensions, StyleSheet, ScrollView, Image } from 'react-native';
+import { View, Text, SafeAreaView, StatusBar, Dimensions, StyleSheet, ScrollView } from 'react-native';
 import React from 'react';
 import SelectDropdown from 'react-native-select-dropdown'
 const width = Dimensions.get('window').width;
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { CredentialSectionComponent } from '../ExploreProfiles/CredentialSectionComponent';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const ConnectScreen = () => {
     const networks = [
@@ -41,8 +42,9 @@ export const ConnectScreen = () => {
                         data={networks}
                         // defaultValueByIndex={1}
                         defaultValue={'Aurora Testnet'}
-                        onSelect={(selectedItem, index) => {
+                        onSelect={async (selectedItem, index) => {
                             console.log(selectedItem, index);
+                            await AsyncStorage.setItem('currentChain', JSON.stringify({chain:selectedItem}))
                         }}
                         defaultButtonText={'Select network'}
                         buttonTextAfterSelection={(selectedItem, index) => {

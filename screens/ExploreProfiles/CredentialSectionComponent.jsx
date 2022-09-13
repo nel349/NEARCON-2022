@@ -5,6 +5,7 @@ import { signIn } from '../../lens_protocol/api-polygon/authenticate'
 import { setDefaultProfile } from '../../lens_protocol/api-polygon/utils'
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getSigner} from '../../lens_protocol/aurora'
 
 const styles = StyleSheet.create({
     buttonStyle: {
@@ -39,7 +40,8 @@ export const CredentialSectionComponent = () => {
     await AsyncStorage.setItem('LH_STORAGE_KEY', JSON.stringify({ address: session.accounts[0]}))
     
     navigation.navigate('Profile', {c:true});
-    console.log('address to save: ' + session.accounts[0])
+    // console.log('address to save: ' + session.accounts[0])
+    // console.log('address privateKey: ' + connector.approveSession)
 }, [connector]);
   const killSession = React.useCallback(() => {
     connector.killSession();
@@ -63,7 +65,7 @@ export const CredentialSectionComponent = () => {
             <Button
                 title="Create Profile"
                 onPress={
-                    () => navigation.navigate('CreateProfileForm')
+                    () => navigation.navigate('CreateProfileForm', {signer: signer})
                 }
             />
             <Button
@@ -103,9 +105,20 @@ export const CredentialSectionComponent = () => {
                         </TouchableOpacity>
 
                         <Button title="Sign in" onPress={async () => {
-                            const {signer} = await signIn(connector.accounts[0], connector)
-                            // console.log('Sign in on press ', signer)
-                            setSigner(signer)
+                            const storedData = await AsyncStorage.getItem('currentChain');
+                            if (storedData){
+                                const { chain } = JSON.parse(storedData)
+                                if (chain == 'Aurora Testnet') {
+                                    const signer = await getSigner(connector);
+                                    setSigner(signer)
+                                    console.log('signed Aurora with Signer: ' + await signer.getAddress())
+                                }
+                                else {
+                                    const {signer} = await signIn(connector.accounts[0], connector)
+                                    // console.log('Sign in on press ', signer)
+                                    setSigner(signer)
+                                }
+                            }
                         }} />
                     </>
                 )
