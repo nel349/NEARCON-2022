@@ -20,13 +20,13 @@ query DefaultProfile($request: DefaultProfileRequest!) {
     }
   }
   `
-export async function fetchDefaultProfile() {
+export async function fetchDefaultProfile(address:string) {
     try {
         const returnedDefaultProfile = await apolloClient.query(
             {
                 query: gql(getDefaultProfile),
                 variables: {
-                    request
+                    request: {"ethereumAddress": address}
                 },
             }
         )
@@ -37,4 +37,3 @@ export async function fetchDefaultProfile() {
         console.log('error fetching profile...', err);
     }
 }
-fetchDefaultProfile();

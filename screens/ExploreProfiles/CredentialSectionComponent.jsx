@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Button, TouchableOpacity, Text, StyleSheet } from 'react-native'
+import { Button, TouchableOpacity, Text, StyleSheet, BackHandler } from 'react-native'
 import { useWalletConnect } from '@walletconnect/react-native-dapp';
 import { signIn } from '../../lens_protocol/api-polygon/authenticate'
 import { setDefaultProfile } from '../../lens_protocol/api-polygon/utils'
@@ -32,14 +32,19 @@ const styles = StyleSheet.create({
 
 export const CredentialSectionComponent = () => {
   const connector = useWalletConnect();
+  const navigation = useNavigation();
+
   const connectWallet = React.useCallback(async () => {
     const session = await connector.connect();
     await AsyncStorage.setItem('LH_STORAGE_KEY', JSON.stringify({ address: session.accounts[0]}))
+    
+    navigation.navigate('Profile', {c:true});
     console.log('address to save: ' + session.accounts[0])
 }, [connector]);
   const killSession = React.useCallback(() => {
     connector.killSession();
     AsyncStorage.clear();
+    navigation.navigate('Profile', {a:false});
 }, [connector]);
   const [signer, setSigner] = useState({});
 
@@ -48,7 +53,6 @@ export const CredentialSectionComponent = () => {
     address.length,
   )}`;
 
-  const navigation = useNavigation();
     return (
         <>
             <Button

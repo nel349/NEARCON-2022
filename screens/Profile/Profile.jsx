@@ -69,16 +69,17 @@ export default function Profile2(props) {
         const {address}  = JSON.parse(storageData);
         console.log('address= ', address);
 
-        if (address !== undefined || address != null) setConnected(true)
+        if (address !== undefined || address != null) setConnected(true);
 
         const profile = await fetchDefaultProfile(address);
-        console.log('current profile = ', JSON.stringify(profile))
+        // console.log('current profile = ', JSON.stringify(profile))
         setUserProfile(profile)
+      } else {
+        setConnected(false);
       }
-
     }
     catch (err) {
-
+      setConnected(false);
     }
 
     try {
@@ -104,7 +105,9 @@ export default function Profile2(props) {
       console.log('error fetching tokens/nfts');
     }
 
-  }, [props])
+    console.log ('props: ' + JSON.stringify(props));
+
+  }, [props], connected)
 
   Profile2.propTypes = {
     avatar: PropTypes.string.isRequired,

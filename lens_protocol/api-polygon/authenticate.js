@@ -9,14 +9,15 @@ import WalletConnectProvider from '@walletconnect/web3-provider';
 import { ethers } from 'ethers';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { basicClient } from './index';
 
 export const signIn = async (account, connector) => {
     try {
         //   setConnected(true);
         //   setUserAddress(account);
         console.log('before urqlClient');
-        const urqlClient = await createClient();
-        console.log('after urqlClient with address');
+        const urqlClient = basicClient;
+        console.log('after urqlClient with address'  + JSON.stringify(urqlClient));
         const response = await urqlClient.query(getChallenge, {
             address: account,
         }).toPromise();
