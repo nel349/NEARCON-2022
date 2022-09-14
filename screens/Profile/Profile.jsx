@@ -105,7 +105,7 @@ export default function Profile2(props) {
       console.log('error fetching tokens/nfts');
     }
 
-    console.log ('props: ' + JSON.stringify(props));
+    // console.log ('props: ' + JSON.stringify(props));
 
   }, [props], connected)
 

@@ -42,15 +42,15 @@ export default class SignUp extends React.Component {
           // console.log('storedData', chain);
           const signer = this.props.route.params.signer;
 
-          console.log('signer: ', signer);
+          // console.log('signer: ', signer);
 
           const address = await signer.getAddress();
 
           console.log('address: ', address);
 
           const inputStruct: CreateProfileDataStruct = {
-            to: '0xe0E040ADe1B1F23BbFaa2a22235Cc692310a40Ab',
-            handle: 'handle133334eeeee33',
+            to: address,
+            handle: username,
             imageURI: 'https://ipfs.io/ipfs/QmY9dUwYu67puaWBMxRKW98LPbXCznPwHUbhX5NeWnCJbX',
             followModule: ZERO_ADDRESS,
             followModuleInitData: [],
