@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Profile2 from './screens/Profile';
 import Profile4 from './screens/ExploreProfiles';
-import CreateProfileForm from './screens/ExploreProfiles/CreateProfileForm';
+import {CreateProfileForm} from './screens/ExploreProfiles/CreateProfileForm';
 import { MyWebComponent } from './components/WebViewComponent'
 import { ConnectScreen } from './screens/initial/ConnectScreen';
 import SuggestedProfileScreen from './screens/ExploreProfiles/SuggestProfileScreen';
@@ -17,7 +17,7 @@ function Profile2StackScreen() {
   return (
     <Profile2Stack.Navigator
       screenOptions={{
-        headerShown: true
+        headerShown: false
       }}
     >
       <Profile2Stack.Screen name="Profile" component={Profile2} />
@@ -42,7 +42,7 @@ function Profile4StackScreen() {
   return (
     <Profile4Stack.Navigator
       screenOptions={{
-        headerShown: true
+        headerShown: false
       }}>
       <Profile4Stack.Screen name="Profile" component={Profile4} />
       <Profile4Stack.Screen name="SuggestedProfile" component={SuggestedProfileScreen} />
@@ -66,15 +66,13 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator 
-        // screenOptions={({ route }) => ({
-          
-        // })}
         initialRouteName={"Home"}
         screenOptions={{
           tabBarIcon: props => <HomeIcon tintColor={undefined} {...props}/>,
           tabBarActiveTintColor: 'blue',
           tabBarInactiveTintColor: 'gray',
-          tabBarShowLabel: false,
+          tabBarShowLabel: true,
+          headerShown: true,
 
           tabBarLabelStyle: {
             fontSize: 12,
