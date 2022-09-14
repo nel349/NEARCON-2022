@@ -2,23 +2,24 @@ import React, {
     useEffect,
     useState
 } from 'react'
-import { View, SafeAreaView, FlatList, Image, Text } from 'react-native'
-import { fetchDefaultProfile } from '../../lens_protocol/aurora/profiles';
+import { View, SafeAreaView, FlatList, Image, Text, Modal, Alert, Pressable } from 'react-native'
 import { styles } from '../Profile/style';
 import Posts from '../Profile/Posts';
 import contactData from '../../mocks/contact.json'
+import { modalStyles } from './styles'
+import QRCode from 'react-native-qrcode-svg';
 
 
-export default function SuggestedProfileScreen(props:any) {
+export default function SuggestedProfileScreen(props: any) {
+    let logoFromFile = require('../../assets/images/auroraLogo.png');
 
     const [userProfile, setUserProfile] = useState<any>();
+    const [modalVisible, setModalVisible] = useState(false);
 
-    const {posts}  = contactData
-    const {profile} = props.route.params
+    const { posts } = contactData
+    const { profile } = props.route.params
 
     const renderContactHeader = () => {
-
-        
 
         console.log('Profile: ' + JSON.stringify(profile))
 
@@ -33,7 +34,10 @@ export default function SuggestedProfileScreen(props:any) {
                         <Text style={styles.userNameText}>{getName() ?? ""}</Text>
                     </View>
                     <View style={styles.userNameRow}>
-                        <Text style={styles.userBioRow}>{getHandle() ?? ""}</Text>
+                        <Text
+                            style={{ color: 'blue' }}
+                            onPress={() => setModalVisible(true)}
+                        >{getHandle() ?? ""}</Text>
                     </View>
                     <View style={styles.userBioRow}>
                         <Text style={styles.userBioText}>{"id: " + getId()}</Text>
@@ -70,7 +74,7 @@ export default function SuggestedProfileScreen(props:any) {
     useEffect(async () => {
         // try {
         //     const profile = await fetchDefaultProfile();
-        //     // console.log('current profile = ', JSON.stringify(profile))
+            // console.log('current profile = ', JSON.stringify(profile))
         //     setUserProfile(profile)
         // }
         // catch (err) {
@@ -87,6 +91,35 @@ export default function SuggestedProfileScreen(props:any) {
                 ListFooterComponent={<Posts containerStyle={styles.sceneContainer} posts={posts} />}
                 renderItem={item => <View></View>}
             />
+
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    Alert.alert("Modal has been closed.");
+                    setModalVisible(!modalVisible);
+                }}
+            >
+                <View style={modalStyles.centeredView}>
+                    <View style={modalStyles.modalView}>
+                        <QRCode
+                            size={200}
+                            value={profile.handle}
+                            logo={logoFromFile}
+                            logoBackgroundColor={"#308219"}
+                        />
+
+
+                        <Pressable
+                            style={[modalStyles.button, modalStyles.buttonClose]}
+                            onPress={() => setModalVisible(!modalVisible)}
+                        >
+                            <Text style={modalStyles.textStyle}>Hide Modal</Text>
+                        </Pressable>
+                    </View>
+                </View>
+            </Modal>
         </SafeAreaView>
     )
 }

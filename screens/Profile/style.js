@@ -12,6 +12,7 @@ export const styles = StyleSheet.create({
       backgroundColor: '#FFF',
       marginBottom: 10,
       marginTop: 45,
+      paddingTop: 45
     },
     indicatorTab: {
       backgroundColor: 'transparent',
@@ -70,6 +71,9 @@ export const styles = StyleSheet.create({
       fontSize: 18,
       fontWeight: 'bold',
       textAlign: 'center',
+    },
+    hyperlinked: {
+      color: 'blue'
     },
     userRow: {
       alignItems: 'center',
