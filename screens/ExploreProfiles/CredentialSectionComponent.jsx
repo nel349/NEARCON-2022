@@ -6,6 +6,7 @@ import { setDefaultProfile } from '../../lens_protocol/api-polygon/utils'
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getSigner} from '../../lens_protocol/aurora'
+import { login } from '../initial/Web3AuthScreen'
 
 const styles = StyleSheet.create({
     buttonStyle: {
@@ -83,9 +84,9 @@ export const CredentialSectionComponent = () => {
             />
 
             <Button
-                title="Make contract call to (DONATE)"
+                title="Web3Auth"
                 onPress={
-                    async () => { }
+                    () => { navigation.navigate('Web3AuthScreen')}
                 }
             />   
 

@@ -89,7 +89,8 @@ const withPackageVisibility: ConfigPlugin = (config) => {
 
 const config: ExpoConfig = {
   name: 'test-dapp',
-  slug: 'test-dapp',
+  slug: 'auroralens',
+  owner: 'nel349',
   version: "1.0.0",
   orientation: "portrait",
   icon: "./assets/images/icon.png",
