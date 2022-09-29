@@ -33,7 +33,7 @@ export const Web3AuthScreen = () => {
     const [connected, setConnected] = useState({});
     const [session, setSession] = useState<State>();
 
-    type Network = { chainId:number, name:string}
+    type Network = { chainId: number, name: string }
 
     return (
         <>
@@ -46,11 +46,6 @@ export const Web3AuthScreen = () => {
                 } catch (e) {
                     console.log('Error: ' + e);
                 }
-
-                // state.sessionId
-
-
-                // 
             }}></Button>
             <Button title="Get User Info" onPress={() => {
                 const userInfo = session?.userInfo
@@ -58,16 +53,13 @@ export const Web3AuthScreen = () => {
             }}></Button>
 
             <Button title="Get Balance" onPress={async () => {
-                const network : Network = {
+                const network: Network = {
                     name: 'Aurora Testnet',
                     chainId: 1313161555,
                 }
-
-
-                // const provider = ethers.getDefaultProvider("https://testnet.aurora.dev/")
                 const provider = new ethers.providers.JsonRpcProvider('https://testnet.aurora.dev', network)
 
-                const signer = new ethers.Wallet(session?.privKey as string, provider);                
+                const signer = new ethers.Wallet(session?.privKey as string, provider);
                 const address = await signer.getAddress()
                 signer.getBalance(address).then((balance) => {
                     // convert a currency unit from wei to ether
@@ -75,10 +67,23 @@ export const Web3AuthScreen = () => {
                     console.log(`balance: ${balanceInEth} ETH`)
                 })
             }}></Button>
+            <Button title="Send Transaction" onPress={() => {
+                const network: Network = {
+                    name: 'Aurora Testnet',
+                    chainId: 1313161555,
+                }
+                const provider = new ethers.providers.JsonRpcProvider('https://testnet.aurora.dev', network);
+                const signer = new ethers.Wallet(session?.privKey as string, provider);
+                const tx = {
+                    to: "0x8ba1f109551bD432803012645Ac136ddd64DBA72",
+                    value: ethers.utils.parseEther("1.0")
+                  }
+                signer.sendTransaction(tx);
+            }}></Button>
             {/*<Button title="Get Chain ID" onPress={()=>{}}></Button>
             <Button title="Get Accounts" onPress={()=>{}}></Button>
             
-            <Button title="Send Transaction" onPress={()=>{}}></Button>
+            
             <Button title="Get Private Key" onPress={()=>{}}></Button>
             <Button title="Log Out" onPress={()=>{}}></Button> */}
         </>
