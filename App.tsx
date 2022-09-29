@@ -11,6 +11,7 @@ import { MyWebComponent } from './components/WebViewComponent'
 import { ConnectScreen } from './screens/initial/ConnectScreen';
 import SuggestedProfileScreen from './screens/ExploreProfiles/SuggestProfileScreen';
 import { Web3AuthScreen } from './screens/initial/Web3AuthScreen';
+import MintNFTScreen from './screens/ToolScreens/MintNFTScreen';
 
 const Profile2Stack = createStackNavigator();
 
@@ -35,6 +36,7 @@ function Profile2StackScreen() {
 
       <Profile4Stack.Screen name="ConnectScreen" component={ConnectScreen} />
       <Profile4Stack.Screen name="Web3AuthScreen" component={Web3AuthScreen} />
+      <Profile4Stack.Screen name="MintNFTScreen" component={MintNFTScreen} />
     </Profile2Stack.Navigator>
   );
 }

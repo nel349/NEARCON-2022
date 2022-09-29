@@ -121,7 +121,13 @@ const config: ExpoConfig = {
     favicon: "./assets/images/favicon.png"
   },
   plugins: [
-    "./plugins/trust-local-certs.js"
+    "./plugins/trust-local-certs.js",
+    [
+      "expo-image-picker",
+      {
+        "photosPermission": "The app accesses your photos to let you share them with your friends."
+      }
+    ]
   ]  
 };
 

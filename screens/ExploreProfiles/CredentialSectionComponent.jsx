@@ -89,6 +89,12 @@ export const CredentialSectionComponent = () => {
                     () => { navigation.navigate('Web3AuthScreen')}
                 }
             />   
+            <Button
+                title="Mint NFT Screen"
+                onPress={
+                    () => { navigation.navigate('MintNFTScreen')}
+                }
+            />   
 
             {
                 !connector.connected && (
