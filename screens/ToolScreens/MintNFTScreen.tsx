@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Image, View, Platform } from 'react-native';
+import React, { useState } from 'react';
+import { Button, Image, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 import FormData from 'form-data'
@@ -29,8 +29,19 @@ export default function MintNFTScreen() {
         const tokenAPI =
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDFlNzZjQUQwYWRlZkZkMjcwNkY0NTI2NDNDNDYzMDk0YTRkZjMxOUIiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY2NDQ3MTMxNTgyNCwibmFtZSI6ImV0aEJvZ290YTIwMjIifQ.-sMKEDPb7d13EUZ-9NEQLrTn1S8eRhVlCCFgV0V6CSA'
 
+        // const metaName = `${image}${Date.now().toString()}`;
+
+        const lastWord = image?.split('/') ?? [];
+        const length = lastWord?.length ?? 0;
+        let name = lastWord[length - 1] ?? 'noName';
+
+        const reg = /.(jpg|jpeg)/g;
+        name = name.replace(reg, '');
+        name = `${name}-${Date.now().toString()}`
+        console.log("Metaname: " + name);
+
         const meta = {
-            "name": "Test1234",
+            "name": name,
             "image": "https://ipfs.io/ipfs/bafkreidivzimqfqtoqxkrpge6bjyhlvxqs3rhe73owtmdulaxr5do5in7u",
             "properties": {
                 "videoClip": null
@@ -51,16 +62,10 @@ export default function MintNFTScreen() {
                 }
             });
 
-            // console.log("response: " + JSON.stringify(response));
+            console.log("response: " + JSON.stringify(response));
         } catch (e) {
             console.log('error: ' + e)
         }
-
-
-        // console.log("response: " + response);
-
-        // console.log("response" + response);
-
     };
 
 
