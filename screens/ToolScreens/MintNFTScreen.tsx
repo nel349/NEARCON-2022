@@ -36,7 +36,7 @@ export default function MintNFTScreen() {
         const filename = getName();
 
         const buffer = Buffer.from(imageBase64 ?? '', "base64");
-        const blob = new Blob([buffer], { type: 'image/jpg' })
+        // const blob = new Blob([buffer], { type: 'image/jpg' }) // we can do blobs too.
         const type = 'image/jpg'
 
         const imageUri = image ?? '';
@@ -79,9 +79,6 @@ export default function MintNFTScreen() {
     const storeMetadataNFT = async () => {
 
         const api = 'https://api.nft.storage/store';
-        
-        // const metaName = `${image}${Date.now().toString()}`;
-
         const name = getName();
 
         const meta = {
